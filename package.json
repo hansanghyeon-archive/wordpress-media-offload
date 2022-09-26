@@ -1,0 +1,9 @@
+{
+  "name": "wordpress",
+  "repository": "https://github.com/Hansanghyeon/wordpress-media-offload.git",
+  "author": "Hansanghyeon <999@hyeon.pro>",
+  "private": true,
+  "workspaces": [
+    "apps/theme"
+  ]
+}

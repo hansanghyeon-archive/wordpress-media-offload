@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  wordpress:
+    image: wordpress:6.0.2-php8.0-apache
+    restart: always
+    env_file:
+      - ./.env
+      - ./.env.minio
+    ports:
+      - 30000:80
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: 1
+      WORDPRESS_DB_NAME: wp
+      WORDPRESS_CONFIG_EXTRA: |
+        define('AS3CF_SETTINGS', serialize(
+          array( 
+            'provider' => 'aws', 
+            'access-key-id' => getenv_docker('MINIO_ROOT_USER', ''),
+            'secret-access-key' => getenv_docker('MINIO_ROOT_PASSWORD', ''),
+          )
+        ));
+    volumes:
+      - ./.docker/wp:/var/www/html
+      - ./apps/theme:/var/www/html/wp-content/themes/main
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_DATABASE: wp
+      MARIADB_ROOT_PASSWORD: 1
+
+  minio:
+    image: minio/minio
+    volumes:
+      - ./.docker/minio/data/minio_root:/minio_root:z
+      - ./.docker/minio/data/certs:/root/.minio/certs:z
+    env_file:
+      - ./.env
+      - ./.env.minio
+    command: minio server /minio_root --console-address ":9001"
+
+volumes:
+  wordpress:
+  redis:

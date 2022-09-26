@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://user-images.githubusercontent.com/42893446/192394703-9084093c-91a7-4121-b2b5-6f39edb8bbad.jpg" width="250px" style="border-radius: 8px">
+<img src="https://user-images.githubusercontent.com/42893446/192394703-9084093c-91a7-4121-b2b5-6f39edb8bbad.jpg" width="368px">
 </p>
 
 
@@ -35,7 +35,7 @@
 
 ## offload media 적용하기
 
-```
+```php
 // functions
 <?php
 
